@@ -145,11 +145,11 @@ export default function CommentsList() {
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <div className="card p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary mb-2">
               Search
             </label>
             <input
@@ -157,19 +157,19 @@ export default function CommentsList() {
               placeholder="Search by name, email, content, or post..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+              className="input-field"
             />
           </div>
 
           {/* Status Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary mb-2">
               Status
             </label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+              className="input-field"
             >
               <option value="all">All Status</option>
               <option value="approved">Approved</option>
@@ -180,52 +180,52 @@ export default function CommentsList() {
         </div>
 
         {/* Sort and Count */}
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-secondary">
               Sort by:
             </label>
             <button
               onClick={() => setSortBy('newest')}
-              className={`px-3 py-1 text-sm rounded-md transition-colors ${
+              className={`px-3 py-1 text-sm rounded-md transition-all ${
                 sortBy === 'newest'
-                  ? 'bg-brand text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-[var(--c-brand)] text-white shadow-sm'
+                  : 'btn-secondary'
               }`}
             >
               Newest First
             </button>
             <button
               onClick={() => setSortBy('oldest')}
-              className={`px-3 py-1 text-sm rounded-md transition-colors ${
+              className={`px-3 py-1 text-sm rounded-md transition-all ${
                 sortBy === 'oldest'
-                  ? 'bg-brand text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  ? 'bg-[var(--c-brand)] text-white shadow-sm'
+                  : 'btn-secondary'
               }`}
             >
               Oldest First
             </button>
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            Showing <span className="font-semibold text-gray-900 dark:text-white">{filteredComments.length}</span> of{' '}
-            <span className="font-semibold text-gray-900 dark:text-white">{comments.length}</span> comments
+          <div className="text-sm text-secondary">
+            Showing <span className="font-semibold text-primary">{filteredComments.length}</span> of{' '}
+            <span className="font-semibold text-primary">{comments.length}</span> comments
           </div>
         </div>
       </div>
 
       {/* Bulk Actions */}
       {selectedIds.length > 0 && (
-        <div className="bg-brand/10 dark:bg-brand/20 rounded-lg border-2 border-brand p-4">
+        <div className="bg-[var(--c-brand)]/10 dark:bg-[var(--c-brand)]/20 rounded-lg border-2 border-[var(--c-brand)] p-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-4">
-              <span className="font-medium text-gray-900 dark:text-white">
+            <div className="flex items-center gap-4 flex-wrap">
+              <span className="font-medium text-primary">
                 {selectedIds.length} selected
               </span>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => handleBulkAction('approved')}
                   disabled={processing}
-                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <CheckCircle className="w-4 h-4" />
                   Approve
@@ -233,7 +233,7 @@ export default function CommentsList() {
                 <button
                   onClick={() => handleBulkAction('pending')}
                   disabled={processing}
-                  className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <Clock className="w-4 h-4" />
                   Pending
@@ -241,7 +241,7 @@ export default function CommentsList() {
                 <button
                   onClick={() => handleBulkAction('spam')}
                   disabled={processing}
-                  className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <Ban className="w-4 h-4" />
                   Spam
@@ -249,7 +249,7 @@ export default function CommentsList() {
                 <button
                   onClick={() => handleBulkAction('delete')}
                   disabled={processing}
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <Trash2 className="w-4 h-4" />
                   Delete
@@ -258,7 +258,7 @@ export default function CommentsList() {
             </div>
             <button
               onClick={() => setSelectedIds([])}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              className="text-secondary hover:text-primary transition-colors"
             >
               Clear Selection
             </button>
@@ -268,12 +268,47 @@ export default function CommentsList() {
 
       {/* Comments List */}
       {loading ? (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
-          <div className="text-lg text-gray-600 dark:text-gray-400">Loading comments...</div>
+        <div className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="card p-6 animate-pulse">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start gap-3 flex-1">
+                  <div className="w-4 h-4 bg-gray-200 dark:bg-slate-700 rounded mt-1"></div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="h-5 bg-gray-200 dark:bg-slate-700 rounded w-32"></div>
+                      <div className="h-5 bg-gray-200 dark:bg-slate-700 rounded w-16"></div>
+                    </div>
+                    <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-48"></div>
+                  </div>
+                </div>
+                <div className="text-right ml-4">
+                  <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-24 mb-1"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-20"></div>
+                </div>
+              </div>
+              <div className="mb-4 space-y-2">
+                <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
+                <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4"></div>
+              </div>
+              <div className="pt-4 border-t border-gray-200 dark:border-slate-200/5">
+                <div className="flex gap-4 mb-4">
+                  <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-32"></div>
+                  <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-24"></div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-20"></div>
+                  <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-20"></div>
+                  <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-20"></div>
+                  <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-20"></div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : filteredComments.length === 0 ? (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
-          <div className="text-lg text-gray-600 dark:text-gray-400">
+        <div className="card p-12 text-center">
+          <div className="text-lg text-secondary">
             {searchTerm ? 'No comments found matching your search' : 'No comments yet'}
           </div>
         </div>
@@ -286,9 +321,9 @@ export default function CommentsList() {
                 type="checkbox"
                 checked={selectedIds.length === filteredComments.length && filteredComments.length > 0}
                 onChange={toggleSelectAll}
-                className="w-4 h-4 text-brand border-gray-300 rounded focus:ring-brand"
+                className="w-4 h-4 text-[var(--c-brand)] border-gray-300 rounded focus:ring-[var(--c-brand)]"
               />
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-secondary">
                 Select All
               </label>
             </div>
@@ -297,10 +332,10 @@ export default function CommentsList() {
           {filteredComments.map((comment) => (
             <div
               key={comment.id}
-              className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border-2 p-6 hover:shadow-md transition-all ${
+              className={`card p-6 hover:shadow-md transition-all ${
                 selectedIds.includes(comment.id)
-                  ? 'border-brand bg-brand/5'
-                  : 'border-gray-200 dark:border-gray-700'
+                  ? 'border-[var(--c-brand)] bg-[var(--c-brand)]/5 border-2'
+                  : 'card-hover'
               }`}
             >
               {/* Header */}
@@ -310,11 +345,11 @@ export default function CommentsList() {
                     type="checkbox"
                     checked={selectedIds.includes(comment.id)}
                     onChange={() => toggleSelect(comment.id)}
-                    className="mt-1 w-4 h-4 text-brand border-gray-300 rounded focus:ring-brand"
+                    className="mt-1 w-4 h-4 text-[var(--c-brand)] border-gray-300 rounded focus:ring-[var(--c-brand)]"
                   />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                    <h3 className="font-semibold text-lg text-primary">
                       {comment.author_name}
                     </h3>
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(comment.status)}`}>
@@ -323,13 +358,13 @@ export default function CommentsList() {
                   </div>
                   <a
                     href={`mailto:${comment.author_email}`}
-                    className="text-sm text-brand hover:text-brand-light"
+                    className="link text-sm"
                   >
                     {comment.author_email}
                   </a>
                 </div>
               </div>
-                <div className="text-right text-sm text-gray-500 dark:text-gray-400 ml-4">
+                <div className="text-right text-sm text-tertiary ml-4">
                   <div>{new Date(comment.created_at).toLocaleDateString()}</div>
                   <div>{new Date(comment.created_at).toLocaleTimeString()}</div>
                 </div>
@@ -337,42 +372,42 @@ export default function CommentsList() {
 
               {/* Content */}
               <div className="mb-4">
-                <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
+                <p className="text-secondary whitespace-pre-wrap">
                   {comment.content}
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-4">
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <div className="pt-4 border-t border-gray-200 dark:border-slate-200/5 space-y-4">
+                <div className="flex flex-wrap gap-4 text-sm text-secondary">
                   <div>
                     <span className="font-medium">Post:</span>{' '}
-                    <span className="text-gray-900 dark:text-white">{comment.post_slug}</span>
+                    <span className="text-primary">{comment.post_slug}</span>
                   </div>
                   {comment.parent_id && (
                     <div>
                       <span className="font-medium">Reply to:</span>{' '}
-                      <span className="text-gray-900 dark:text-white">Comment #{comment.parent_id}</span>
+                      <span className="text-primary">Comment #{comment.parent_id}</span>
                     </div>
                   )}
                   <div>
                     <span className="font-medium">ID:</span>{' '}
-                    <span className="text-gray-900 dark:text-white">#{comment.id}</span>
+                    <span className="text-primary">#{comment.id}</span>
                   </div>
                   {comment.ip_address && (
                     <div>
                       <span className="font-medium">IP:</span>{' '}
-                      <span className="text-gray-900 dark:text-white">{comment.ip_address}</span>
+                      <span className="text-primary font-mono">{comment.ip_address}</span>
                     </div>
                   )}
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <button
                     onClick={() => handleSingleAction(comment.id, 'approved')}
                     disabled={processing || comment.status === 'approved'}
-                    className="px-3 py-1.5 text-sm bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                    className="px-3 py-1.5 text-sm bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
                   >
                     <CheckCircle className="w-4 h-4" />
                     Approve
@@ -380,7 +415,7 @@ export default function CommentsList() {
                   <button
                     onClick={() => handleSingleAction(comment.id, 'pending')}
                     disabled={processing || comment.status === 'pending'}
-                    className="px-3 py-1.5 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                    className="px-3 py-1.5 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
                   >
                     <Clock className="w-4 h-4" />
                     Pending
@@ -388,7 +423,7 @@ export default function CommentsList() {
                   <button
                     onClick={() => handleSingleAction(comment.id, 'spam')}
                     disabled={processing || comment.status === 'spam'}
-                    className="px-3 py-1.5 text-sm bg-orange-500 hover:bg-orange-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                    className="px-3 py-1.5 text-sm bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
                   >
                     <Ban className="w-4 h-4" />
                     Spam
@@ -396,7 +431,7 @@ export default function CommentsList() {
                   <button
                     onClick={() => handleSingleAction(comment.id, 'delete')}
                     disabled={processing}
-                    className="px-3 py-1.5 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+                    className="px-3 py-1.5 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
                   >
                     <Trash2 className="w-4 h-4" />
                     Delete

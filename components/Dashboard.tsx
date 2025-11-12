@@ -13,7 +13,7 @@ import TopCommenters from './TopCommenters';
 import SuspiciousIPs from './SuspiciousIPs';
 import ActivityHeatmap from './ActivityHeatmap';
 import ExportData from './ExportData';
-import { BarChart3, MessageSquare, TrendingUp, Lock, Search, Zap, Shield, Mail } from 'lucide-react';
+import { BarChart3, MessageSquare, TrendingUp, Lock, Search, Zap, Shield, Mail, RefreshCw } from 'lucide-react';
 
 export default function Dashboard() {
   const [stats, setStats] = useState<CommentStats & { chartData: ChartDataPoint[] } | null>(null);
@@ -62,81 +62,135 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-gray-600 dark:text-gray-400">Loading...</div>
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+        {/* Header Skeleton */}
+        <header className="bg-white dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-200/5 backdrop-blur-sm sticky top-0 z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-64 mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-48"></div>
+            </div>
+          </div>
+        </header>
+
+        {/* Content Skeleton */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="space-y-8">
+            {/* Stats Cards Skeleton */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="card p-6 animate-pulse">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-20 mb-3"></div>
+                      <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-16"></div>
+                    </div>
+                    <div className="w-12 h-12 bg-gray-200 dark:bg-slate-700 rounded-lg"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Chart Skeleton */}
+            <div className="card p-6 animate-pulse">
+              <div className="h-6 bg-gray-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
+              <div className="h-80 bg-gray-200 dark:bg-slate-700 rounded"></div>
+            </div>
+
+            {/* Two Column Skeleton */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="card p-6 animate-pulse">
+                  <div className="h-6 bg-gray-200 dark:bg-slate-700 rounded w-40 mb-6"></div>
+                  <div className="space-y-4">
+                    {[...Array(5)].map((_, j) => (
+                      <div key={j} className="h-16 bg-gray-200 dark:bg-slate-700 rounded"></div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+      <header className="bg-white dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-200/5 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-3xl font-bold text-primary">
                 Blog Admin Dashboard
               </h1>
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-tertiary">
                 Manage and visualize your blog comments
               </p>
             </div>
             <button
               onClick={fetchStats}
-              className="px-4 py-2 bg-brand hover:bg-brand-light text-white rounded-md font-medium transition-colors"
+              className="btn-primary inline-flex items-center gap-2"
+              aria-label="Refresh dashboard data"
             >
+              <RefreshCw className="w-4 h-4" />
               Refresh
             </button>
           </div>
           
           {/* Tabs */}
-          <div className="mt-6 flex gap-4 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+          <nav className="mt-6 flex gap-2 border-b border-gray-200 dark:border-slate-200/5 overflow-x-auto" aria-label="Dashboard sections">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`pb-3 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center gap-2 ${
+              className={`pb-3 px-4 border-b-2 font-medium text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeTab === 'overview'
-                  ? 'border-brand text-brand'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  ? 'border-[var(--c-brand)] text-[var(--c-brand)]'
+                  : 'border-transparent text-tertiary hover:text-secondary hover:border-gray-300 dark:hover:border-slate-600'
               }`}
+              aria-current={activeTab === 'overview' ? 'page' : undefined}
             >
               <BarChart3 className="w-4 h-4" />
               Overview
             </button>
             <button
               onClick={() => setActiveTab('comments')}
-              className={`pb-3 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center gap-2 ${
+              className={`pb-3 px-4 border-b-2 font-medium text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeTab === 'comments'
-                  ? 'border-brand text-brand'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  ? 'border-[var(--c-brand)] text-[var(--c-brand)]'
+                  : 'border-transparent text-tertiary hover:text-secondary hover:border-gray-300 dark:hover:border-slate-600'
               }`}
+              aria-current={activeTab === 'comments' ? 'page' : undefined}
             >
               <MessageSquare className="w-4 h-4" />
               Comments
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`pb-3 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center gap-2 ${
+              className={`pb-3 px-4 border-b-2 font-medium text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeTab === 'analytics'
-                  ? 'border-brand text-brand'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  ? 'border-[var(--c-brand)] text-[var(--c-brand)]'
+                  : 'border-transparent text-tertiary hover:text-secondary hover:border-gray-300 dark:hover:border-slate-600'
               }`}
+              aria-current={activeTab === 'analytics' ? 'page' : undefined}
             >
               <TrendingUp className="w-4 h-4" />
               Analytics
             </button>
             <button
               onClick={() => setActiveTab('security')}
-              className={`pb-3 px-3 border-b-2 font-medium text-sm transition-colors whitespace-nowrap flex items-center gap-2 ${
+              className={`pb-3 px-4 border-b-2 font-medium text-sm transition-all whitespace-nowrap flex items-center gap-2 ${
                 activeTab === 'security'
-                  ? 'border-brand text-brand'
-                  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  ? 'border-[var(--c-brand)] text-[var(--c-brand)]'
+                  : 'border-transparent text-tertiary hover:text-secondary hover:border-gray-300 dark:hover:border-slate-600'
               }`}
+              aria-current={activeTab === 'security' ? 'page' : undefined}
             >
-              <Lock className="w-4 h-4" />
+              <Shield className="w-4 h-4" />
               Security
             </button>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -177,51 +231,60 @@ export default function Dashboard() {
         {activeTab === 'security' && analytics && (
           <div className="space-y-8">
             <SuspiciousIPs ips={analytics.suspiciousIPs || []} />
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="card p-6">
+              <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-[var(--c-brand)]" />
                 Security Recommendations
               </h2>
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                <div className="flex gap-3">
+              <div className="space-y-6">
+                <div className="flex gap-4 p-4 rounded-lg bg-gray-50 dark:bg-slate-800/30">
                   <div className="flex-shrink-0">
-                    <Search className="w-6 h-6 text-brand" />
+                    <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+                      <Search className="w-5 h-5 text-[var(--c-brand)]" />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Monitor Suspicious IPs</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="font-semibold text-primary mb-1">Monitor Suspicious IPs</h3>
+                    <p className="text-sm text-secondary">
                       Regularly check the suspicious IPs list and consider blocking repeat offenders at the firewall level.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-4 p-4 rounded-lg bg-gray-50 dark:bg-slate-800/30">
                   <div className="flex-shrink-0">
-                    <Zap className="w-6 h-6 text-brand" />
+                    <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-[var(--c-brand)]" />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Use Rate Limiting</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="font-semibold text-primary mb-1">Use Rate Limiting</h3>
+                    <p className="text-sm text-secondary">
                       Implement rate limiting on your comment submission endpoint to prevent spam attacks.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-4 p-4 rounded-lg bg-gray-50 dark:bg-slate-800/30">
                   <div className="flex-shrink-0">
-                    <Shield className="w-6 h-6 text-brand" />
+                    <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-[var(--c-brand)]" />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Enable CAPTCHA</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="font-semibold text-primary mb-1">Enable CAPTCHA</h3>
+                    <p className="text-sm text-secondary">
                       Consider adding CAPTCHA to the comment form for additional spam protection.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-4 p-4 rounded-lg bg-gray-50 dark:bg-slate-800/30">
                   <div className="flex-shrink-0">
-                    <Mail className="w-6 h-6 text-brand" />
+                    <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+                      <Mail className="w-5 h-5 text-[var(--c-brand)]" />
+                    </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Email Verification</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="font-semibold text-primary mb-1">Email Verification</h3>
+                    <p className="text-sm text-secondary">
                       Require email verification before approving comments from new users.
                     </p>
                   </div>

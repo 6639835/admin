@@ -101,56 +101,61 @@ export default function ExportData() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-        Export Data
-      </h2>
+    <div className="card p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+          <Download className="w-5 h-5 text-[var(--c-brand)]" />
+        </div>
+        <h2 className="text-xl font-bold text-primary">
+          Export Data
+        </h2>
+      </div>
       <div className="space-y-4">
-        <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+        <div className="p-4 bg-gray-50 dark:bg-slate-800/30 rounded-lg">
+          <h3 className="font-semibold text-primary mb-2">
             Export Comments
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <p className="text-sm text-secondary mb-3">
             Export all comments to a CSV file
           </p>
           <button
             onClick={handleExportComments}
             disabled={exporting}
-            className="px-4 py-2 bg-brand hover:bg-brand-light text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Export Comments CSV
           </button>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+        <div className="p-4 bg-gray-50 dark:bg-slate-800/30 rounded-lg">
+          <h3 className="font-semibold text-primary mb-2">
             Export Engagement Data
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <p className="text-sm text-secondary mb-3">
             Export post engagement metrics to CSV
           </p>
           <button
             onClick={handleExportEngagement}
             disabled={exporting}
-            className="px-4 py-2 bg-brand hover:bg-brand-light text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Export Engagement CSV
           </button>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+        <div className="p-4 bg-gray-50 dark:bg-slate-800/30 rounded-lg">
+          <h3 className="font-semibold text-primary mb-2">
             Export Full Analytics
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <p className="text-sm text-secondary mb-3">
             Export all stats and analytics to JSON
           </p>
           <button
             onClick={handleExportAnalytics}
             disabled={exporting}
-            className="px-4 py-2 bg-brand hover:bg-brand-light text-white rounded-md font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Export Analytics JSON

@@ -2,17 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --c-brand: #3eaf7c;
-  --c-brand-light: #4abf8a;
+@layer base {
+  :root {
+    --c-brand: #3eaf7c;
+    --c-brand-light: #4abf8a;
+  }
 }
 
-.link {
-  color: var(--c-brand);
-}
+@layer components {
+  .link {
+    @apply text-[var(--c-brand)] hover:text-[var(--c-brand-light)] transition-colors;
+  }
 
-.link:hover {
-  color: var(--c-brand-light);
+  .card {
+    @apply rounded-lg border border-gray-200 bg-white dark:border-slate-200/5 dark:bg-slate-800/50;
+  }
+
+  .card-hover {
+    @apply hover:border-[var(--c-brand)] dark:hover:border-[var(--c-brand-light)] transition-colors;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-[var(--c-brand)] hover:bg-[var(--c-brand-light)] text-white rounded-lg font-medium transition-all shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 border border-gray-200 bg-white hover:bg-gray-50 dark:border-slate-200/5 dark:bg-slate-800/50 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-200 dark:border-slate-200/5 rounded-lg bg-white dark:bg-slate-800/50 focus:outline-none focus:ring-2 focus:ring-[var(--c-brand)] focus:border-transparent transition-all;
+  }
+
+  .text-primary {
+    @apply text-gray-900 dark:text-white;
+  }
+
+  .text-secondary {
+    @apply text-gray-600 dark:text-gray-300;
+  }
+
+  .text-tertiary {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  .skeleton {
+    @apply animate-pulse bg-gray-200 dark:bg-slate-700;
+  }
 }
 
 /* Scrollbar styling */
@@ -22,29 +58,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  @apply bg-gray-100 dark:bg-slate-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  @apply bg-gray-300 dark:bg-slate-600 rounded;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #555;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #777;
-  }
+  @apply bg-gray-400 dark:bg-slate-500;
 }
 

@@ -1,4 +1,5 @@
 import type { Comment } from '@/types/comment';
+import { MessageSquare } from 'lucide-react';
 
 interface RecentCommentsProps {
   comments: Comment[];
@@ -14,32 +15,37 @@ export default function RecentComments({ comments }: RecentCommentsProps) {
       case 'spam':
         return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400';
+        return 'bg-gray-100 text-gray-800 dark:bg-slate-700 dark:text-gray-400';
     }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-        Recent Comments
-      </h2>
+    <div className="card p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-10 h-10 rounded-lg bg-[var(--c-brand)]/10 flex items-center justify-center">
+          <MessageSquare className="w-5 h-5 text-[var(--c-brand)]" />
+        </div>
+        <h2 className="text-xl font-bold text-primary">
+          Recent Comments
+        </h2>
+      </div>
       {comments.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+        <p className="text-tertiary text-center py-8">
           No comments yet
         </p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {comments.map((comment) => (
             <div
               key={comment.id}
-              className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="p-4 bg-gray-50 dark:bg-slate-800/30 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700/50 transition-all"
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900 dark:text-white truncate">
+                  <p className="font-semibold text-primary truncate">
                     {comment.author_name}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <p className="text-xs text-tertiary truncate">
                     {comment.post_slug}
                   </p>
                 </div>
@@ -47,10 +53,10 @@ export default function RecentComments({ comments }: RecentCommentsProps) {
                   {comment.status}
                 </span>
               </div>
-              <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
+              <p className="text-sm text-secondary line-clamp-2">
                 {comment.content}
               </p>
-              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+              <p className="mt-2 text-xs text-tertiary">
                 {new Date(comment.created_at).toLocaleString()}
               </p>
             </div>
